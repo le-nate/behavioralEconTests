@@ -31,12 +31,14 @@ class Constants(BaseConstants):
 
 
 def read_csv():
+    # This function gets the probabilities and choice values from the csv file
     import csv
     import random
 
     f = open(__name__ + '/stimuli.csv', encoding='utf8')
     rows = list(csv.DictReader(f))
 
+    # This shuffles the order of the rows presented in the table
     random.shuffle(rows)
     return rows
 
