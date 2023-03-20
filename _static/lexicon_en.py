@@ -145,3 +145,5 @@ class Lexicon:
 
     lex_error_task_instructions_general = '''That is incorrect. Please, review 
     the instructions and correct your answer.'''
+
+    lex_error_not_correct_selection = '''That is incorrect. Please, try again.'''

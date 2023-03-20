@@ -143,3 +143,5 @@ class Lexicon:
     # Error messages
     lex_error_task_instructions_general = '''C'est inexact. Veuillez 
     revoir les instructions et corriger votre réponse.'''
+
+    lex_error_not_correct_selection = "C'est inexact. Veuillez réessayer."
