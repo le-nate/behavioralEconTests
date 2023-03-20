@@ -50,8 +50,6 @@ def creating_session(subsession: Subsession):
         stimuli = read_csv()
         for stim in stimuli:
             Trial.create(player=p, **stim)
-        p.participant.remunerated_behavioral = []
-    print(p.participant.remunerated_behavioral)
 
 
 class Group(BaseGroup):
@@ -164,13 +162,6 @@ class Results(Page):
             Lexicon=Lexicon,
             **which_language
         )
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        player.participant.riskPreferences = float(
-            player.payoff) * SESSION_CONFIG_DEFAULTS['conversion_factor']
-        print('risk preferences payoff: ', player.participant.riskPreferences)
-        return player.participant.remunerated_behavioral.append(float(player.payoff)*SESSION_CONFIG_DEFAULTS['conversion_factor'])
 
 
 page_sequence = [
