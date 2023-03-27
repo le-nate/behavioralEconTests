@@ -141,6 +141,35 @@ class Lexicon:
     lex_numatt_not_confident = "Not confident at all"
     lex_numatt_confident = "Absolutely confident"
 
+    # Loss aversion
+    lex_toss_coin = "Toss coin"
+    lex_dont_toss_coin = "Don't toss coin"
+
+    # BRET
+    lex_bret_bomb_collected = "Bomb collected"
+    lex_bret_boxes_collected = "Number of boxes collected"
+    lex_bret_boxes_remaining = "Number of boxes remaining"
+    lex_bret_boxes_to_collect = "Number of boxes to collect"
+    lex_bret_results = 'Results'
+    lex_bret_round_history = "Round history"
+    lex_bret_round_number = "Round no."
+    lex_bret_round_payoff = "Round payoff"
+    lex_bret_solve = "Solve"
+    lex_bret_start = "Start"
+    lex_bret_stop = "Stop"
+    lex_bret_your_decision = "Your decision"
+
+    # timePreferences
+    lex_timePreferences_task_name = "Payment Scheduler"
+    lex_timePreferences_sooner = "Right Now"
+    lex_timePreferences_which = "Which do you prefer?"
+    lex_timePreferences_delay_1 = "1 week"
+    lex_timePreferences_delay_2 = "2 weeks"
+    lex_timePreferences_delay_3 = "1 month"
+    lex_timePreferences_delay_4 = "3 months"
+    lex_timePreferences_delay_5 = "6 months"
+    lex_timePreferences_delay_6 = "1 year"
+
     # Error messages
 
     lex_error_task_instructions_general = '''That is incorrect. Please, review 

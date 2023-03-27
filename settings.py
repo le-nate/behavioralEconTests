@@ -2,6 +2,18 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
+        name='BRET',
+        display_name='Bomb risk elicitation task',
+        app_sequence=['BRET'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='lossAversion',
+        display_name='Loss aversion',
+        app_sequence=['lossAversion'],
+        num_demo_participants=1,
+    ),
+    dict(
         name='Numeracy',
         display_name='Berlin Numeracy Test',
         app_sequence=['Numeracy'],
@@ -11,6 +23,18 @@ SESSION_CONFIGS = [
         name='riskPreferences',
         display_name='Holt & Laury',
         app_sequence=['riskPreferences'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='timePreferences',
+        display_name='Time Preferences',
+        app_sequence=['timePreferences'],
+        num_demo_participants=1,
+    ),
+    dict(
+        name='wisconsin',
+        display_name='Wisconsin card sorting task',
+        app_sequence=['wisconsin'],
         num_demo_participants=1,
     ),
 ]
@@ -32,8 +56,8 @@ SESSION_FIELDS = []
 LANGUAGE_CODE = 'fr'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+REAL_WORLD_CURRENCY_CODE = 'EUR'
+USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable

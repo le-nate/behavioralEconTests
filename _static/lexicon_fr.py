@@ -140,6 +140,35 @@ class Lexicon:
     lex_numatt_not_confident = "Pas du tout confiant"
     lex_numatt_confident = "Absolument confiant"
 
+    # Loss aversion
+    lex_toss_coin = "Lancer la pièce"
+    lex_dont_toss_coin = "Ne pas lancer"
+
+    # BRET
+    lex_bret_bomb_collected = "Bombe collectée"
+    lex_bret_boxes_collected = "Nombre de boîtes collectées"
+    lex_bret_boxes_remaining = "Number of boxes remaining"
+    lex_bret_boxes_to_collect = "Nombre de boîtes restantes"
+    lex_bret_results = 'Résultats'
+    lex_bret_round_history = "Histoire des tours"
+    lex_bret_round_number = "Numéro du tour"
+    lex_bret_round_payoff = "Gain du tour"
+    lex_bret_start = "Début"
+    lex_bret_stop = "Stop"
+    lex_bret_solve = "Résoudre"
+    lex_bret_your_decision = "Votre décision"
+
+    # timePreferences
+    lex_timePreferences_task_name = "Planificateur de paiement"
+    lex_timePreferences_sooner = "Maintenant"
+    lex_timePreferences_which = "Que préférez-vous ?"
+    lex_timePreferences_delay_1 = "1 semaine"
+    lex_timePreferences_delay_2 = "2 semaines"
+    lex_timePreferences_delay_3 = "1 mois"
+    lex_timePreferences_delay_4 = "3 mois"
+    lex_timePreferences_delay_5 = "6 mois"
+    lex_timePreferences_delay_6 = "1 an"
+
     # Error messages
     lex_error_task_instructions_general = '''C'est inexact. Veuillez 
     revoir les instructions et corriger votre réponse.'''

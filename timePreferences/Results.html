@@ -1,0 +1,19 @@
+{{ block title }}
+
+{{ if fr }}
+    Terminé
+
+{{ else }}
+    Completed
+
+{{ endif }}
+
+{{ endblock }}
+
+{{ block content }}
+
+{{ Lexicon.lex_completed_questionnaire }}<br><br>
+
+    {{ next_button }}
+
+    {{ endblock }}

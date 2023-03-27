@@ -1,8 +1,9 @@
 from otree.api import *
 from settings import SESSION_CONFIG_DEFAULTS, SESSION_CONFIGS, PARTICIPANT_FIELDS, LANGUAGE_CODE
 
+author = 'Nathaniel Lawrence, LEMMA, Université Panthéon-Assas'
 doc = """
-Choice list (Holt/Laury, risk preferences, price list, equivalence test, etc)
+Based off of Choice List (Holt/Laury, risk preferences, price list, equivalence test, etc)
 From: Gerhard Riener, https://www.otreehub.com/projects/morning-beach-6401/
 """
 
@@ -19,26 +20,23 @@ which_language[LANGUAGE_CODE[:2]] = True
 
 
 class Constants(BaseConstants):
-    name_in_url = 'h_l'
+    name_in_url = 'lav'
     players_per_group = None
     num_rounds = 1
     table_template = __name__ + '/table.html'
-    lottery_high_a = '2,00 €'
-    lottery_low_a = '1,60 €'
-    lottery_high_b = '3,85 €'
-    lottery_low_b = '0,10 €'
-    probability = 50
+
+    # Introduction constants
+    WIN = cu(1200)
+    LOSE = cu(600)
 
 
 def read_csv():
-    # This function gets the probabilities and choice values from the csv file
     import csv
     import random
 
     f = open(__name__ + '/stimuli.csv', encoding='utf8')
     rows = list(csv.DictReader(f))
 
-    # This shuffles the order of the rows presented in the table
     random.shuffle(rows)
     return rows
 
@@ -59,24 +57,23 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    ## choices = [[value,label],[value,label]]
     practice = models.IntegerField(
         widget=widgets.RadioSelect,
-        choices=[[0, 0], [1, 1]]
+        choices=[[0, Lexicon.lex_toss_coin], [1, Lexicon.lex_dont_toss_coin]]
     )
-    raw_responses = models.LongStringField()  # True = chose safe option
-    chose_safe = models.BooleanField()
-    won_lottery = models.BooleanField()
+    raw_responses = models.LongStringField()
+    chose_toss = models.BooleanField()  # True = chose coin toss
+    won_toss = models.BooleanField()
 
 
 class Trial(ExtraModel):
     player = models.Link(Player)
-    lottery_high_a = models.FloatField()
-    lottery_low_a = models.FloatField()
-    lottery_high_b = models.FloatField()
-    lottery_low_b = models.FloatField()
-    probability = models.IntegerField()
-    chose_safe = models.BooleanField()
+    toss_win = models.CurrencyField()
+    toss_lose = models.CurrencyField()
+    no_toss_a = models.CurrencyField()
+    no_toss_b = models.CurrencyField()
+    probability = models.FloatField()
+    chose_toss = models.BooleanField()
     randomly_chosen = models.BooleanField(initial=False)
 
 
@@ -132,24 +129,23 @@ class Stimuli(Page):
 
         responses = json.loads(player.raw_responses)
         for trial in trials:
-            trial.chose_safe = responses["{} - {}".format(
-                trial.id, trial.probability)]
+            trial.chose_toss = responses["{} - {}".format(
+                trial.id, trial.toss_lose)]
 
         trial = random.choice(trials)
         trial.randomly_chosen = True
-        player.chose_safe = trial.chose_safe
-        if player.chose_safe:
-            player.won_lottery = (trial.probability / 100) > random.random()
-            if player.won_lottery:
-                payoff = trial.lottery_high_a
+        player.chose_toss = trial.chose_toss
+        if player.chose_toss:
+            player.won_toss = (trial.probability / 100) > random.random()
+            if player.won_toss:
+                payoff = trial.toss_win
             else:
-                payoff = trial.lottery_low_a
+                payoff = trial.toss_lose * -1
         else:
-            player.won_lottery = (trial.probability / 100) > random.random()
-            if player.won_lottery:
-                payoff = trial.lottery_high_b
+            if player.field_maybe_none('won_toss'):
+                payoff = trial.no_toss_a
             else:
-                payoff = trial.lottery_low_b
+                payoff = trial.no_toss_b
         player.payoff = payoff
 
 
@@ -157,8 +153,10 @@ class Results(Page):
     @staticmethod
     def vars_for_template(player: Player):
         trials = Trial.filter(player=player, randomly_chosen=True)
+        reward = player.payoff
         return dict(
             trials=trials,
+            reward=reward,
             Lexicon=Lexicon,
             **which_language
         )

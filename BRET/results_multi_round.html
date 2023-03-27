@@ -1,0 +1,49 @@
+{{ if fr }}
+    Le tableau ci-dessous résume les résultats de vos décisions lors des 
+    {{ C.NUM_ROUNDS }} tours joués.
+{{ else }}
+    The table below summarizes the results of your decisions in the
+    {{ C.NUM_ROUNDS }} rounds played.
+{{ endif }}
+</div>
+
+    <div class="card">
+        <div class="card-header">
+            <b>{{ Lexicon.lex_bret_round_history }}</b>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>{{ Lexicon.lex_bret_round_number }}</th>
+                    <th>{{ Lexicon.lex_bret_boxes_collected }}</th>
+                    <th>{{ Lexicon.lex_bret_bomb_collected }}</th>
+                    <th>{{ Lexicon.lex_bret_round_payoff }}</th>
+                </tr>
+                {{ for p in player_in_all_rounds }}
+                <tr>
+                    <td>{{ p.round_number }}</td>
+                    <td>{{ p.boxes_collected }}</td>
+                    <td>
+                        {{ if p.bomb }}
+                            {{ Lexicon.lex_yes }}
+                        {{ else }}
+                            {{ Lexicon.lex_no }}
+                        {{ endif }}
+                    </td>
+                    <td>{{ p.round_result }}</td>
+                </tr>
+                {{ endfor }}
+            </table>
+        </div>
+    </div>
+
+    <div class="card card-info">
+        {{ if fr }}
+            Pour votre paiement, le tour numéro {{ round_to_pay }} a été choisi au hasard.<br/>
+            Ainsi, votre gain final dans cette tâche s'élève à {{ total_payoff }}.
+        {{ else }}
+            For your payment, round number {{ round_to_pay }} was randomly chosen. <br/>
+            Thus, your final payoff in this task amounts to {{ total_payoff }}.
+        {{ endif }}
+    </div>

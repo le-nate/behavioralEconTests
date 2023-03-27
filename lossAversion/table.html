@@ -1,0 +1,31 @@
+<table class="table table-striped">
+    <tr>
+        <th></th>
+        <th>Lancer ou pas ?</th>
+        <th></th>
+    </tr>
+    {{ for t in trials }}
+    <tr>
+        <td>
+            Si la pièce tombe sur face, vous <b>perdez {{ t.toss_lose|to2
+                }}</b>. Si la pièce tombe sur pile, vous <b>gagnez {{
+                t.toss_win|to2 }}</b>.
+        </td>
+        <td>
+            {{ if t.chose_toss == None }}
+
+            <input type="radio" name="{{ t.id }} - {{ t.toss_lose }}" value="1"
+                required class="radio-choice">
+            {{ Lexicon.lex_toss_coin }}
+            <br><br>
+
+            <input type="radio" name="{{ t.id }} - {{ t.toss_lose }}" value="0"
+                required class="radio-choice">
+            {{ Lexicon.lex_dont_toss_coin }}
+            <br><br>
+            {{ endif }}
+
+        </td>
+    </tr>
+    {{ endfor }}
+</table>

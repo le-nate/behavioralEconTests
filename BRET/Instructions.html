@@ -1,0 +1,129 @@
+{{ block styles }}
+<link href="{{ static 'bret/css/custom.css' }}" rel="stylesheet" />
+{{ endblock }}
+
+
+{{ block title }}
+{{ Lexicon.lex_instructions }}
+{{ endblock }}
+
+{{ block content }}
+
+<div class="instructions">
+    {{ if fr }}
+    <p>
+        Dans l'exemple suivant, vous verrez une matrice {{ C.NUM_ROWS }}x{{
+        C.NUM_COLS }} contenant {{ C.NUM_BOXES }}
+        boîtes sur votre écran.
+    </p>
+
+    {{ if C.RANDOM }}
+    <p>
+        Dès que vous lancez la tâche en appuyant sur le bouton '{{
+        Lexicon.lex_bret_start }}',
+        une des boîtes est collectée toutes les {{ C.TIME_INTERVAL }} seconde(s)
+        de manière aléatoire.
+        Une fois collectée, la boîte est cochée par un symbole.
+        Pour chaque boîte collectée, vous gagnez {{ C.BOX_VALUE }}.
+    </p>
+    {{ else }}
+    <p>
+        As soon as you start the task by hitting the 'Start' button,
+        one of the boxes is collected per {{ C.TIME_INTERVAL }} second(s),
+        starting from the top-left corner.
+        Once collected, the box is marked by a tick symbol.
+        For each box collected you earn {{ C.BOX_VALUE }}.
+    </p>
+    {{ endif }}
+
+    <p>
+        Derrière l'une des boîtes se cache une bombe qui détruit tout ce qui a
+        été collecté.
+        Les {{ num_nobomb }} boîtes restantes valent {{ C.BOX_VALUE }} chacune.
+        Vous ne savez pas où se trouve la bombe.
+        Vous savez seulement que la bombe peut se trouver à n'importe quel
+        endroit avec la même probabilité.
+    </p>
+
+    <p>
+        Votre tâche consiste à choisir quand arrêter le processus de collecte.
+        Vous pouvez le faire en appuyant sur
+        '{{ Lexicon.lex_bret_stop}}' à tout moment. Si vous collectez la boîte
+        où se trouve la bombe,
+        celle-ci explosera et vous gagnerez zéro.
+        Si vous arrêtez avant de collecter la bombe, vous gagnez le montant
+        accumulé jusqu'à présent.
+    </p>
+
+    <p><i>
+            À la fin de la tâche, vous pouvez changer de case en cliquant sur le
+            bouton '{{ Lexicon.lex_bret_solve}}'.
+            Un signe de ₮ ou un symbole de bombe s'affichera sur chacune de vos
+            cases collectées.
+        </i></p>
+
+    <p>
+        Vous allez completer cette tâche {{ C.NUM_ROUNDS }} fois. Un des deux
+        résultats sera choisi de manière
+        aléatoire, et le montant collecté sera ajouté à votre rémunération.
+    </p>
+
+
+    {{ else }}
+    <p>
+        In the following, you will see a {{ C.NUM_ROWS }}x{{ C.NUM_COLS
+        }}-matrix containing
+        {{ C.NUM_BOXES }} boxes on your screen.
+    </p>
+
+    {{ if C.RANDOM }}
+    <p>
+        As soon as you start the task by hitting the 'Start' button,
+        one of the boxes is collected per {{ C.TIME_INTERVAL }} second(s) at
+        random.
+        Once collected, the box is marked by a tick symbol.
+        For each box collected you earn {{ C.BOX_VALUE }}.
+    </p>
+    {{ else }}
+    <p>
+        As soon as you start the task by hitting the 'Start' button,
+        one of the boxes is collected per {{ C.TIME_INTERVAL }} second(s),
+        starting from the top-left corner.
+        Once collected, the box is marked by a tick symbol.
+        For each box collected you earn {{ C.BOX_VALUE }}.
+    </p>
+    {{ endif }}
+
+    <p>
+        Behind one of the boxes hides a bomb that destroys everything that has
+        been collected.
+        The remaining {{ num_nobomb }} boxes are worth {{ C.BOX_VALUE }} each.
+        You do not know where the bomb is located.
+        You only know that the bomb can be in any place with equal probability.
+    </p>
+    <p>
+        Your task is to choose when to stop the collecting process. You do so by
+        hitting 'Stop' at any time.
+        If you collect the box where the bomb is located, the bomb will explode
+        and you will earn zero.
+        If you stop before collecting the bomb, you gain the amount accumulated
+        thus far.
+    </p>
+    <p><i>
+            At the end of the task boxes are toggled by hitting the 'Solve'
+            button.
+            A ₮ or a bomb symbol will be shown on each of your collected boxes.
+        </i></p>
+
+    <p>
+        You will complete this task {{ C.NUM_ROUNDS }} times. One of the two
+        results will be randomly selected and added
+        to your remuneration.
+    </p>
+
+    {{ endif }}
+</div>
+
+{{ next_button }}
+
+{{ endblock }}

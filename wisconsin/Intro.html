@@ -1,0 +1,140 @@
+{{ block title }}
+{{ Lexicon.lex_instructions }}
+{{ endblock }}
+
+{{ block content }}
+
+{{ if fr }}
+<h3>Tâche : Correspondance des cartes</h3>
+Vous allez maintenant accomplir une tâche, où vous devez associer des cartes
+selon des règles que vous devez déduire.
+Lisez l'explication ci-dessous et cliquez sur le bouton Suivant en bas lorsque
+vous êtes prêt à commencer la
+tâche.<br><br>
+
+<h3>Écran de jeu</h3>
+Pendant la tâche, vous verrez un écran comme celui illustré ci-dessous : une
+rangée de quatre cartes différentes et une
+seule carte en dessous.
+Vous devez deviner laquelle des quatre cartes ci-dessus correspond à la carte
+unique du dessous en vous basant sur la
+couleur, la forme ou le nombre d'éléments de la carte.<br><br>
+Vous devez deviner en cliquant sur la carte du dessus qui, selon vous,
+correspond à la carte du dessous.
+On vous montre alors un 🙂 lorsque votre supposition est correcte et un ☹
+lorsque la supposition n'est pas
+correcte.<br><br>
+<i>Note : la règle de correspondance change périodiquement au cours du
+    jeu.</i><br><br>
+
+{{ else }}
+<h3>Task: Card Matching</h3>
+You will now complete a task. In this task, you must match cards according to
+rules that you must deduce. Read the
+explanation below and click the Next button at the bottom of the page when you
+are ready to begin the task.<br><br>
+
+<h3>Game Screen</h3>
+During the task, you will see a screen like the one shown below: a row of four
+different cards and a single card beneath
+it. You guess which of the four above cards matches the single below card based
+on either the color, shape, or number of
+items on the card.<br><br>
+You make a guess by clicking the above card you believe matches the below card
+one. You then are shown a 🙂 when your
+guess is correct and a ☹ when the guess is not correct.<br><br>
+<i>Note: the matching rule periodically changes throughout the game.</i><br><br>
+
+{{ endif }}
+<style>
+    .wisc-card {
+        width: 10rem;
+        height: 14rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .wisc-img {
+        display: block;
+    }
+
+    #feedback {
+        font-size: x-large;
+    }
+</style>
+
+<div class="container">
+
+    <p id="feedback"></p>
+
+    <div class="row">
+        {{ for deck_number in deck_numbers }}
+        <div class="col">
+            <button type="button" onclick="selectDeck(this)"
+                value="{{ deck_number }}" class="btn-card">
+                <!-- it's just a coincidence that we use the bootstrap 'card' element to represent a card :) -->
+                <div class="card wisc-card">
+                    <div class="card-body" id="deck-{{deck_number}}">
+                    </div>
+                </div>
+            </button>
+        </div>
+        {{ endfor }}
+
+    </div>
+
+    <br>
+    <p></p>
+    <div class="card wisc-card">
+        <div class="card-body" id="test-card">
+        </div>
+    </div>
+    <br><br>
+
+    {{ next_button }}
+
+    <script>
+        function makeCardContent({ number, shape, color }) {
+            let images = [];
+            for (let i = 0; i < number; i++) {
+                let image = `<img src="/static/wisconsin/${shape}-${color}.svg" width="50em" class="wisc-img">`;
+                images.push(image);
+            }
+            return images.join('');
+        }
+
+        function liveRecv(data) {
+            if ('finished' in data) {
+                document.getElementById('form').submit();
+                return;
+            }
+            if ('feedback' in data) {
+                msgFeedback.innerHTML = data.feedback;
+            }
+            if ('decks' in data) {
+                for (let i = 0; i < 4; i++) {
+                    document.getElementById(`deck-${i}`).innerHTML = makeCardContent(data.decks[i])
+                }
+            }
+            if ('test_card' in data) {
+                document.getElementById(`test-card`).innerHTML = makeCardContent(data.test_card);
+            }
+
+            msgProgress.innerHTML = data.num_trials;
+
+            for (let btn of buttons) {
+                btn.disabled = '';
+            }
+
+            displayed_timestamp = performance.now();
+
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            liveSend({});
+        });
+
+    </script>
+
+
+    {{ endblock }}
